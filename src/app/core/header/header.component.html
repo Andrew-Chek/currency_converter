@@ -1,1 +1,9 @@
-<p>header works!</p>
+<header class="header">
+    <img src="../../../assets/images/mcurrency_converter_header.jpg" class="header-image" alt="currency_image">
+    <section class="header-currencies">
+        <div class="header-currency currency" *ngFor="let currency of currencies">
+            <h2 class="currency-name">{{currency.name}}</h2>
+            <p class="currency-value">{{currency.value}}</p>
+        </div>
+    </section>
+</header>

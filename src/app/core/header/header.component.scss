@@ -1,0 +1,30 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    height: 20%;
+    align-items: center;
+    background-color: #fff;
+    &-image {
+        display: block;
+        max-width: 30%;
+        max-height: 150px;
+    }
+    &-currencies {
+        width: 10%;
+    }
+}
+
+.currency {
+    display: flex;
+    justify-content: space-between;
+    &-name {
+        font: {
+            weight: 600;
+            size: 18px
+        }
+    }
+    &-value {
+        font-size: 18px;
+    }
+}

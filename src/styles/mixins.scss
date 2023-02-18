@@ -1,0 +1,8 @@
+@import './variables';
+
+@mixin --text-styles {
+    font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
+    letter-spacing: 1px;
+    word-spacing: 1px;
+    color: --text-color;
+}

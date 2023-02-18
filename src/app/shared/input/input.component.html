@@ -1,1 +1,8 @@
-<p>input works!</p>
+<section class="amount-input" (change)="sendRequestData(currencies.value, amount.value)">
+    <label>Amount</label>
+    <input type="text" value="{{inputValue}}" #amount>
+    <label for="">{{direction}}</label>
+    <select name="currency-chooser" #currencies>
+        <option *ngFor="let option of options" [selected]="option === selectValue" value="{{option}}">{{option}}</option>
+    </select>
+</section>
