@@ -6,14 +6,14 @@ import { CurrencyResonse } from 'src/app/shared/interfaces/CurrencyResponse';
   providedIn: 'root'
 })
 export class ConversionService {
-  private apiUrl = 'https://api.apilayer.com/fixer';
-  private accessKey = 'STmiXXtmUrxUXvFynhgOB5XqFFA4cYcp';
+  private apiUrl = 'https://api.apilayer.com/exchangerates_data';
+  private accessKey = 'bWI6JXBskJrZ90ElyLKC26GdCMcMlIZe';
 
   constructor(private http: HttpClient) { }
 
   convertCurrencies(startCurrency:string, exchangeCurrency:string, amount=1) {
     return this.http.get<CurrencyResonse>(
-      `${this.apiUrl}/convert?from=${startCurrency}&to=${exchangeCurrency}&amount=${amount}`, 
+      `${this.apiUrl}/convert?to=${exchangeCurrency}&from=${startCurrency}&amount=${amount}`, 
       { headers: {apikey: this.accessKey}}
     )
   }

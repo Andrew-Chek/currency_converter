@@ -1,4 +1,4 @@
-<article class="input" (input)="sendRequestData(currencies.value, amount.value)">
+<article class="input" (change)="sendRequestData(currencies.value, amount.value)">
     <section class="field">
         <input [ngClass]="!checkError ? 'field-value' : 'error-value'" type="text" value="{{inputValue}}" #amount>
         <p [ngClass]="checkError ? 'visible' : 'invisible'">Input isn't correct</p>

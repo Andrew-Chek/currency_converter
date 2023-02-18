@@ -1,5 +1,5 @@
 import { ConversionService } from './../../features/conversion/conversion.service';
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { mergeMap, map, Subscription } from 'rxjs';
 import { Currency } from 'src/app/shared/interfaces/Currency';
 
@@ -7,7 +7,6 @@ import { Currency } from 'src/app/shared/interfaces/Currency';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
