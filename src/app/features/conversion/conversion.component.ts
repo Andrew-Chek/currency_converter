@@ -1,20 +1,22 @@
 import { ConversionService } from './conversion.service';
 import { CurrencyInput } from './../../shared/interfaces/currencyInput';
-import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { map, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-conversion',
   templateUrl: './conversion.component.html',
-  styleUrls: ['./conversion.component.scss']
+  styleUrls: ['./conversion.component.scss'],
 })
-export class ConversionComponent implements OnInit {
+export class ConversionComponent implements OnInit, OnDestroy {
 
   startAmount = 0;
   exchangeAmount = 0;
   startCurrency = "UAH"
   exchangeCurrency = "USD"
   exhangeDirection = false;
+  private subscriptions:Array<Subscription> = []
+
   constructor(private conversionService: ConversionService) { }
 
   ngOnInit(): void {
@@ -25,7 +27,7 @@ export class ConversionComponent implements OnInit {
     this.exchangeAmount = amount;
   }
 
-  convertCurrencies(currencyInfo: CurrencyInput) {
+  private setCurrencyInfo(currencyInfo: CurrencyInput) {
     if(currencyInfo.directionFlag)
     {
       this.setAmount(currencyInfo.amount)
@@ -36,6 +38,10 @@ export class ConversionComponent implements OnInit {
       this.startAmount = currencyInfo.amount;
       this.startCurrency = currencyInfo.name;
     }
+  }
+
+  convertCurrencies(currencyInfo: CurrencyInput) {
+    this.setCurrencyInfo(currencyInfo)
     let request;
     this.exhangeDirection ?
       request = this.conversionService.convertCurrencies(this.exchangeCurrency, this.startCurrency, this.exchangeAmount)
@@ -50,6 +56,11 @@ export class ConversionComponent implements OnInit {
           this.exchangeAmount = value.result;
           return value;
         }));
-    request.subscribe();
+    const sub = request.subscribe(value => console.log(value));
+    this.subscriptions.push(sub);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe())
   }
 }

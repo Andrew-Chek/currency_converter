@@ -1,0 +1,45 @@
+@import '../../../styles/mixins.scss';
+.input {
+    padding: 30px;
+    display: flex;
+    .selector-label {
+        font: {
+            size: 18px;
+            weight: 600;
+        }
+        padding: 10px;
+    }
+    .field-value, .selector-value {
+        @include --input-params;
+    }
+    .selector-value {
+        cursor: pointer;
+    }
+    .error-value {
+        @include --error-input-params;
+    }
+    .invisible {
+        display: none;
+    }
+    .visible {
+        display: block;
+        margin: 5px;
+        color: var(--error-color);
+    }
+}
+
+@media (max-width: 768px){
+    .input {
+        padding: 15px;
+        .field-value, .selector-value {
+            @include --input-mobile-params;
+        }
+        .selector-label {
+            font: {
+                size: 12px;
+                weight: 600;
+            }
+            padding: 3px;
+        }
+    }
+}

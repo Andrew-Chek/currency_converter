@@ -6,8 +6,8 @@ import { CurrencyResonse } from 'src/app/shared/interfaces/CurrencyResponse';
   providedIn: 'root'
 })
 export class ConversionService {
-  apiUrl = 'https://api.apilayer.com/fixer'
-  accessKey = 'bWI6JXBskJrZ90ElyLKC26GdCMcMlIZe'
+  private apiUrl = 'https://api.apilayer.com/fixer';
+  private accessKey = 'STmiXXtmUrxUXvFynhgOB5XqFFA4cYcp';
 
   constructor(private http: HttpClient) { }
 

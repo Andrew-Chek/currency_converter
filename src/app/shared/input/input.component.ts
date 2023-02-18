@@ -17,12 +17,18 @@ export class InputComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  checkDirectionFlag() {
-    return this.direction == "to"
-  }
+  
   sendRequestData(name:string, amount: string)
   {
     const parsed = Number.parseInt(amount)
-    Number.isNaN(parsed) ? this.checkError = true : this.sentCurrencyInput.emit({directionFlag: this.checkDirectionFlag(), name, amount: parsed})
+    if(Number.isNaN(parsed))
+    {
+      this.checkError = true
+    }
+    else
+    {
+      this.sentCurrencyInput.emit({directionFlag: this.direction == "to", name, amount: parsed})
+      this.checkError = false
+    }
   }
 }

@@ -1,38 +1,42 @@
 import { ConversionService } from './../../features/conversion/conversion.service';
-import { Component, OnInit } from '@angular/core';
-import { mergeMap, map } from 'rxjs';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { mergeMap, map, Subscription } from 'rxjs';
 import { Currency } from 'src/app/shared/interfaces/Currency';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
-  currencies:Array<Currency> = []
+  currencies:Array<Currency> = [];
+  private subscriptions: Array<Subscription> = [];
+
   constructor(private conversionService: ConversionService) { }
 
   ngOnInit(): void {
+    this.fillCurrencies();
+  }
+
+  private fillCurrencies() {
     this.currencies = [];
-    const usd = {
-      name: 'USD', 
-      value: 0
-    }
-    const eur = {
-      name:'EUR', 
-      value: 0
-    }
-    this.conversionService.convertCurrencies('USD', 'UAH').pipe(
+    const conversionSub = this.conversionService.convertCurrencies('USD', 'UAH').pipe(
       mergeMap(value => {
-        usd.value = value.result;
+        const usd = {name: 'USD', value: value.result}
+        this.currencies.push(usd);
         return this.conversionService.convertCurrencies('EUR', 'UAH')
       }),
       map(value => {
-        eur.value = value.result;
+        const eur = {name: 'EUR', value: value.result}
+        this.currencies.push(eur);
       })
     ).subscribe();
-    this.currencies.push(usd);
-    this.currencies.push(eur);
+    this.subscriptions.push(conversionSub);
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach(subscription => subscription.unsubscribe())
   }
 }

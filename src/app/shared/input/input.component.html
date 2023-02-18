@@ -1,8 +1,12 @@
-<section class="amount-input" (change)="sendRequestData(currencies.value, amount.value)">
-    <label>Amount</label>
-    <input type="text" value="{{inputValue}}" #amount>
-    <label for="">{{direction}}</label>
-    <select name="currency-chooser" #currencies>
-        <option *ngFor="let option of options" [selected]="option === selectValue" value="{{option}}">{{option}}</option>
-    </select>
-</section>
+<article class="input" (input)="sendRequestData(currencies.value, amount.value)">
+    <section class="field">
+        <input [ngClass]="!checkError ? 'field-value' : 'error-value'" type="text" value="{{inputValue}}" #amount>
+        <p [ngClass]="checkError ? 'visible' : 'invisible'">Input isn't correct</p>
+    </section>
+    <section class="selector">
+        <label class="selector-label" for="">{{direction}}</label>
+        <select class="selector-value" name="currency-chooser" #currencies>
+            <option class="selector-option" *ngFor="let option of options" [selected]="option === selectValue" value="{{option}}">{{option}}</option>
+        </select>
+    </section>
+</article>
